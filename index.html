@@ -9,9 +9,36 @@
 </head>
 <body>
     
+    <div class="container d-flex justify-content-center align-items-center my-5">
+        <div class="card p-4">
+            <h1 class="card-header">DBDLE</h1>
+            <form id="searchForm" class="card-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Character Name">
+                    <input type="submit" value="Guess" class="btn btn-outline-primary">
+                </div>
+
+                <!-- Search Suggestions -->
+                <div class="d-none">
+
+                </div>
+
+            </form>
+            
+            <!-- Square divs for each category -->
+        <div class="guess-container card-footer">
+            <!-- Image -->
+            <div class="cell"><span>Character</span></div>
+            <div class="cell"><span>Gender</span></div>
+            <div class="cell"><span>Origin</span></div>
+            <div class="cell"><span>Height</span></div>
+            <div class="cell"><span>Release Year</span></div>
+            <div class="cell">Difficulty<span></span></div>
+        </div>
+        </div>
 
 
-
+    </div>
 
 
     <script src="/js/script.js"></script>
