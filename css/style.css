@@ -1,0 +1,27 @@
+
+
+.cell{
+    display: flex;
+    display: flex;
+    align-items: center;
+    font-size: 100%;
+    margin: .2vw;
+    width: 4vw;
+    height: 4vw;
+    min-width: 33px;
+    min-height: 33px;
+    border-bottom: 1px solid var(--bs-black);
+}
+
+.outline{
+    border: 1px solid var(--bs-black);
+}
+
+.guessdiv{
+    display: flex;
+    margin-bottom: 1vh;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
