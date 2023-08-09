@@ -22,6 +22,7 @@
 .guess-container{
     width: 33vw;
     min-width: 30rem;
+    max-width: 633px;
 }
 .cell-container{
     display: flex;
