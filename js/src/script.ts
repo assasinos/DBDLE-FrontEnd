@@ -35,8 +35,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
+    //Get all characters based on the input
+    function GetSuggestions(value : string): Array<CharacterTypes.Character> {
+        return allCharacters.filter(x => x.CharacterName.toLowerCase().startsWith(value.toLowerCase()));
+    }
 
-
+    //Create a div for the guess
     function CreateGuessDiv(character : CharacterTypes.Character): HTMLDivElement{
 
         const guessDiv : HTMLDivElement = document.createElement("div");
@@ -60,6 +64,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         return guessDiv;
     }
 
+
+    //Create a category cell with the value
     function CreateGuessCell(value : string) : HTMLDivElement{
         const cellDiv : HTMLDivElement = document.createElement("div");
         cellDiv.classList.add("cell", "border", "border-dark");
