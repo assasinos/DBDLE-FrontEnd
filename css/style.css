@@ -1,31 +1,69 @@
-
-
-
-
-.cell{
-    /* Square */
-    /* I think this should be changed */
-    width: 16.666666%;
-    aspect-ratio: 1/1;
-
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    display: flex;
-
-    margin-top: .3rem;
-    
+:root {
+  --Incorect-Background: #ff6b6b;
+  --Correct-Background: #36d657;
+  --Partial-Background: #ffd700;
+  --Cell-Text-Color: #ffffff;
+  --Cell-Text-Shadow: #000000;
 }
 
+.cell {
+  /* Square */
+  /* I think this should be changed */
+  width: 16.666666%;
+  aspect-ratio: 1/1;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+
+  margin-top: 0.3rem;
+}
 
 /* Change The overflow to work with phones */
-.guess-container{
-    width: 33vw;
-    min-width: 30rem;
-    max-width: 633px;
+.guess-container {
+  width: 33vw;
+  min-width: 30rem;
+  max-width: 633px;
 }
-.cell-container{
-    display: flex;
-    gap: .5rem;
-    min-width: 30rem;
+.cell-container {
+  display: flex;
+  gap: 0.5rem;
+  min-width: 30rem;
+}
+
+.correct {
+  background-color: var(--Correct-Background);
+  color: var(--Cell-Text-Color);
+
+  text-shadow: -1px -1px var(--Cell-Text-Shadow),
+    1px -1px var(--Cell-Text-Shadow), -1px 1px var(--Cell-Text-Shadow),
+    1px 1px var(--Cell-Text-Shadow);
+
+
+    -webkit-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+}
+.incorrect {
+  background-color: var(--Incorect-Background);
+  color: var(--Cell-Text-Color);
+  text-shadow: -1px -1px var(--Cell-Text-Shadow),
+    1px -1px var(--Cell-Text-Shadow), -1px 1px var(--Cell-Text-Shadow),
+    1px 1px var(--Cell-Text-Shadow);
+
+    -webkit-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+}
+.partial {
+  background-color: var(--Partial-Background);
+  color: var(--Cell-Text-Color);
+  text-shadow: -1px -1px var(--Cell-Text-Shadow),
+    1px -1px var(--Cell-Text-Shadow), -1px 1px var(--Cell-Text-Shadow),
+    1px 1px var(--Cell-Text-Shadow);
+
+    -webkit-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    -moz-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
 }
