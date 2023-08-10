@@ -1,0 +1,31 @@
+
+
+
+
+.cell{
+    /* Square */
+    /* I think this should be changed */
+    width: 16.666666%;
+    aspect-ratio: 1/1;
+
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+
+    margin-top: .3rem;
+    
+}
+
+
+/* Change The overflow to work with phones */
+.guess-container{
+    width: 33vw;
+    min-width: 30rem;
+    max-width: 633px;
+}
+.cell-container{
+    display: flex;
+    gap: .5rem;
+    min-width: 30rem;
+}

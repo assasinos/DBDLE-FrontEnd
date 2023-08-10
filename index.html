@@ -3,9 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DBDLE</title>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     
+    <div class="container-fluid d-flex justify-content-center align-items-center my-5 text-center">
+        <div class="card p-4">
+            <h1 class="card-header">DBDLE</h1>
+            <form id="searchForm" class="card-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Character Name">
+                    <input type="submit" value="Guess" class="btn btn-outline-primary">
+                </div>
+
+                <!-- Search Suggestions -->
+                <div class="d-none">
+
+                </div>
+
+            </form>
+            
+            <!-- Square divs for each category -->
+        <div class="mb-2 guess-container d-flex flex-column">
+            <div class="cell-container">
+            <!-- Image, but i need to check copyright (...)  -->
+                <div class="cell border-bottom border-dark"><span>Character</span></div>
+            <!--  -->
+
+                <div class="cell border-bottom border-dark"><span>Gender</span></div>
+                <div class="cell border-bottom border-dark"><span>Origin</span></div>
+                <div class="cell border-bottom border-dark"><span>Height</span></div>
+                <div class="cell border-bottom border-dark"><span>Release Year</span></div>
+                <div class="cell border-bottom border-dark"><span>Difficulty</span></div>
+            </div>
+
+
+
+            <div id="guess-container">
+                <!-- Example of a guess -->
+                <div class="cell-container">
+                    <div class="cell border border-dark"><span>Character</span></div>
+                    <div class="cell border border-dark"><span>Gender</span></div>
+                    <div class="cell border border-dark"><span>Origin</span></div>
+                    <div class="cell border border-dark"><span>Height</span></div>
+                    <div class="cell border border-dark"><span>Release Year</span></div>
+                    <div class="cell border border-dark"><span>Difficulty</span></div>
+                </div>
+
+            </div>
+
+        </div>
+        
+        </div>
+    </div>
+
+
+    <script src="/js/dist/bundle.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
