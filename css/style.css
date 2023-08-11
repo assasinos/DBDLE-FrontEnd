@@ -1,7 +1,11 @@
 :root {
   --Incorect-Background: #ff6b6b;
+  --Incorect-Hover-Background: #ff9e9e;
   --Correct-Background: #36d657;
+  --Correct-Hover-Background: #76ff76;
   --Partial-Background: #ffd700;
+  --Partial-Hover-Background: #ffe76b;
+
   --Cell-Text-Color: #ffffff;
   --Cell-Text-Shadow: #000000;
   --Cell-Div-Shadow:#42445a;
@@ -40,9 +44,6 @@
 
 
 
-
-
-
 /* Cell Correctness */
 
 .correct {
@@ -58,6 +59,11 @@
     -moz-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
     box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
 }
+
+.correct:hover{
+  background-color: var(--Correct-Hover-Background);
+}
+
 .incorrect {
   background-color: var(--Incorect-Background);
   color: var(--Cell-Text-Color);
@@ -69,6 +75,11 @@
     -moz-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
     box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
 }
+
+.incorrect:hover{
+  background-color: var(--Incorect-Hover-Background);
+}
+
 .partial {
   background-color: var(--Partial-Background);
   color: var(--Cell-Text-Color);
@@ -79,6 +90,10 @@
     -webkit-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
     -moz-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
     box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+}
+
+.partial:hover{
+  background-color: var(--Partial-Hover-Background);
 }
 
 .older{
