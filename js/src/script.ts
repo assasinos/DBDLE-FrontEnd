@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Temporary code to test the styling
     characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(dailyCharacter));
     characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(allCharacters[0]));
+    characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(allCharacters[12]));
+
 
 
 
@@ -68,8 +70,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             dailyCharacter.Height == character.Height ? "correct" : "incorrect"
             );
 
+
         guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.ReleaseYear.toString()))?.classList.add(
-            dailyCharacter.ReleaseYear == character.ReleaseYear ? "correct" : "incorrect"
+            ...dailyCharacter.ReleaseYear == character.ReleaseYear ? ["correct"] : 
+            dailyCharacter.ReleaseYear > character.ReleaseYear ? ["incorrect","newer"] : ["incorrect","older"]
             );
 
         guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Difficulty.toString()))?.classList.add(
