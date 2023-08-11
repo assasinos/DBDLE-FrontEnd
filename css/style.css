@@ -4,6 +4,11 @@
   --Partial-Background: #ffd700;
   --Cell-Text-Color: #ffffff;
   --Cell-Text-Shadow: #000000;
+  --Cell-Div-Shadow:#42445a;
+
+  --Cell-Older-Path: url("../assets/older.svg");
+  --Cell-Newer-Path: url("../assets/newer.svg")
+
 }
 
 .cell {
@@ -32,6 +37,14 @@
   min-width: 30rem;
 }
 
+
+
+
+
+
+
+/* Cell Correctness */
+
 .correct {
   background-color: var(--Correct-Background);
   color: var(--Cell-Text-Color);
@@ -41,9 +54,9 @@
     1px 1px var(--Cell-Text-Shadow);
 
 
-    -webkit-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
-    -moz-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
-    box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    -webkit-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+    -moz-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+    box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
 }
 .incorrect {
   background-color: var(--Incorect-Background);
@@ -52,9 +65,9 @@
     1px -1px var(--Cell-Text-Shadow), -1px 1px var(--Cell-Text-Shadow),
     1px 1px var(--Cell-Text-Shadow);
 
-    -webkit-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
-    -moz-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
-    box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    -webkit-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+    -moz-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+    box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
 }
 .partial {
   background-color: var(--Partial-Background);
@@ -63,7 +76,18 @@
     1px -1px var(--Cell-Text-Shadow), -1px 1px var(--Cell-Text-Shadow),
     1px 1px var(--Cell-Text-Shadow);
 
-    -webkit-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
-    -moz-box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
-    box-shadow: inset 0px 0px 17px -3px rgba(66, 68, 90, 1);
+    -webkit-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+    -moz-box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+    box-shadow: inset 0px 0px 17px -3px var(--Cell-Div-Shadow);
+}
+
+.older{
+
+  background-image: var(--Cell-Older-Path);
+  background-size: cover;
+}
+
+.newer{
+  background-image: var(--Cell-Newer-Path);
+  background-size: cover;
 }
