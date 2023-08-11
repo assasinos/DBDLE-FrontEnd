@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     //Temporary code to test the styling
     characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(dailyCharacter));
+    characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(allCharacters[0]));
+
 
 
 
@@ -50,15 +52,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         //Change this to the actual image, this is just a placeholder
         guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.CharacterName));
         
-        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Gender));
 
-        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Origin));
+        //Can be Male and Female at the same time 
+        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Gender))?.classList.add(
+            dailyCharacter.Gender.includes(character.Gender) ? 
+                (dailyCharacter.Gender == character.Gender ? "correct" : "partial")
+            : "incorrect"
+            );
 
-        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Height.toString()));
+        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Origin))?.classList.add(
+            dailyCharacter.Origin == character.Origin ? "correct" : "incorrect"
+            );
 
-        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.ReleaseYear.toString()));
+        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Height.toString()))?.classList.add(
+            dailyCharacter.Height == character.Height ? "correct" : "incorrect"
+            );
 
-        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Difficulty.toString()));
+        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.ReleaseYear.toString()))?.classList.add(
+            dailyCharacter.ReleaseYear == character.ReleaseYear ? "correct" : "incorrect"
+            );
+
+        guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(character.Difficulty.toString()))?.classList.add(
+            dailyCharacter.Difficulty == character.Difficulty ? "correct" : "incorrect"
+            );
 
 
         return guessDiv;
