@@ -11,7 +11,12 @@
   --Cell-Div-Shadow:#42445a;
 
   --Cell-Older-Path: url("../assets/older.svg");
-  --Cell-Newer-Path: url("../assets/newer.svg")
+  --Cell-Newer-Path: url("../assets/newer.svg");
+
+  --Suggestion-border: #bbbbbb;
+
+
+  --Anim-Lenght: .5s;
 
 }
 
@@ -41,6 +46,56 @@
   min-width: 30rem;
 }
 
+  .suggestions {
+    position: absolute;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: var(--bs-light-bg-subtle);
+    padding: 10px;
+    border-radius: 0.5rem;
+    width: 100%;
+    left: -.4%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+
+    animation-duration: var(--Anim-Lenght);
+    animation-name: anim-fade;
+    animation-fill-mode: backwards;
+
+  }
+  @keyframes anim-fade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .disappear{
+    animation-duration: var(--Anim-Lenght);
+    animation-name: anim-disappear;
+    animation-fill-mode: forwards;
+    
+  }
+
+  @keyframes anim-disappear {
+    0% { opacity: 1; }
+    100% { opacity: 0;}
+  }
+  
+.suggestion{
+  cursor: pointer;
+  padding: 5px;
+  width: 90%;
+  border: 1px solid var(--Suggestion-border);
+  margin: .3rem;
+  
+}
+.suggestion:hover{
+  
+  transform: scale(1.05);
+  background-color: var(--bs-light);
+}
 
 
 

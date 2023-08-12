@@ -17,10 +17,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     //This is a base64 encoded string so it's not easily readable
     const dailyCharacter: CharacterTypes.Character = JSON.parse(atob(await(await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()));
 
-
     //Get all characters
     const allCharacters : Array<CharacterTypes.Character> = JSON.parse(await(await fetch(`${apihost}/api/Characters/GetAllCharacters`)).json())
 
+    //Get suggestions div
+    const suggestions : HTMLDivElement = document.getElementById("suggestions") as HTMLDivElement || (() => {
+        throw new Error("Could not find suggestions element");
+    })();
 
     //Get the character guess container element
     const characterGuessContainer: HTMLElement = document.getElementById("guess-container") || (() => {
@@ -28,16 +31,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     })();
 
 
+    //Get input element
+    const input : HTMLInputElement = document.getElementById("guess-input") as HTMLInputElement || (() => {
+        throw new Error("Could not find Guess input");
+    })();
+
+
+
     //Temporary code to test the styling
-    characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(dailyCharacter));
-    characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(allCharacters[0]));
-    characterGuessContainer.insertAdjacentElement("beforeend", CreateGuessDiv(allCharacters[12]));
+    characterGuessContainer.insertAdjacentElement("afterbegin", CreateGuessDiv(dailyCharacter));
+    characterGuessContainer.insertAdjacentElement("afterbegin", CreateGuessDiv(allCharacters[0]));
+    characterGuessContainer.insertAdjacentElement("afterbegin", CreateGuessDiv(allCharacters[12]));
+    //
 
 
 
 
 
 
+
+    function DisplaySuggestions():void {
+
+        const chars = GetSuggestions(input.value);
+
+        
+
+    }
 
     //Get all characters based on the input
     function GetSuggestions(value : string): Array<CharacterTypes.Character> {
@@ -96,4 +115,34 @@ document.addEventListener("DOMContentLoaded", async () => {
         return cellDiv;
     }
 
+
+    onsubmit = (e) =>{
+        e.preventDefault();
+    }
+
+
+
+
+    //Event listeners
+
+
+    //Show suggestions on input focus
+    input.addEventListener("focus", ()=>{
+        suggestions.classList.toggle("disappear");
+        suggestions.classList.toggle("d-flex");
+    });
+
+    //Hide suggestions on input blur
+    input.addEventListener("blur", async ()=>{
+
+
+        suggestions.classList.toggle('disappear');
+        await setTimeout(() => {
+
+            //Maybe change in the future
+            suggestions.innerHTML = "";
+            suggestions.classList.toggle("d-flex");
+        },500 );
+        
+    });
 });
