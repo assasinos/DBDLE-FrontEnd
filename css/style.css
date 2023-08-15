@@ -80,16 +80,22 @@
 
   @keyframes anim-disappear {
     0% { opacity: 1; }
-    100% { opacity: 0;}
+    100% { opacity: 0; display: none;}
   }
   
+.cell img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  -webkit-user-drag: none;
+}
+
 .suggestion{
-  cursor: pointer;
   padding: 5px;
   width: 90%;
   border: 1px solid var(--Suggestion-border);
   margin: .3rem;
-  
+
+
 }
 .suggestion:hover{
   
