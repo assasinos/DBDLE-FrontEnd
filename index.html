@@ -14,19 +14,21 @@
             <h1 class="card-header">DBDLE</h1>
             <form id="searchForm" class="card-body">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Character Name">
+                    <input id="guess-input" type="text" class="form-control" placeholder="Enter Character Name">
                     <input type="submit" value="Guess" class="btn btn-outline-primary">
                 </div>
 
                 <!-- Search Suggestions -->
-                <div class="d-none">
-
+                <div class="disappear suggestions" id="suggestions">
+                    <button class="suggestion"><span>TEST</span></button>
+                    <button class="suggestion"><span>TEST</span></button>
+                    <button class="suggestion"><span>TEST</span></button>
                 </div>
 
             </form>
             
             <!-- Square divs for each category -->
-        <div class="mb-2 guess-container d-flex flex-column" id="guess-container">
+        <div class="mb-2 guess-container d-flex flex-column" >
             <div class="cell-container">
             <!-- Image, but i need to check copyright (...)  -->
                 <div class="cell border-bottom border-dark"><span>Character</span></div>
@@ -37,7 +39,11 @@
                 <div class="cell border-bottom border-dark"><span>Release Year</span></div>
                 <div class="cell border-bottom border-dark"><span>Difficulty</span></div>
             </div>
+            <div id="guess-container">
 
+            </div>
+
+            
         </div>
         
         </div>
