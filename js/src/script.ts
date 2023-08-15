@@ -119,6 +119,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
+  function GreateSuggestionDiv(character : CharacterTypes.Character):HTMLDivElement{
+    const suggestionDiv: HTMLDivElement = document.createElement("div");
+    suggestionDiv.classList.add("suggestion");
+
+    const img: HTMLImageElement = document.createElement("img");
+    img.src = "/assets/" + character.Image.ImagePath;
+    img.alt = character.CharacterName;
+    suggestionDiv.insertAdjacentElement("beforeend", img);
+
+    const span: HTMLSpanElement = document.createElement("span");
+    span.innerText = character.CharacterName;
+    suggestionDiv.insertAdjacentElement("beforeend", span);
+
+
+
+    return suggestionDiv;
+
+  }
 
   //Create a category cell with the image
   function CreateGuessCellImg(src: string, characterName :string ): HTMLDivElement {
@@ -133,10 +151,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function AddGuess(character :CharacterTypes.Character) : void {
+    input.value = "";
+    suggestions.innerHTML = "";
     characterGuessContainer.insertAdjacentElement(
       "afterbegin",
       CreateGuessDiv(character)
     );
+    allCharacters.splice(allCharacters.indexOf(character), 1);
+    input.blur();
   }
 
 
@@ -144,17 +166,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   onsubmit = (e) => {
     e.preventDefault();
 
-    if(input.value.length < 3) return;
 
 
     const characters = GetSuggestions(input.value);
     if(characters.length < 1) return;
 
     AddGuess(characters[0]);
-    allCharacters.splice(allCharacters.indexOf(characters[0]), 1);
-    console.log(allCharacters);
-    input.value = "";
-    input.blur();
+
   };
 
   //Event listeners
@@ -173,6 +191,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 500);
   });
 
+  input.addEventListener("input", (e) => {
+
+    if(input.value.length < 1) 
+    {
+      suggestions.innerHTML = "";
+      return;
+    }
+    const characters  = GetSuggestions(input.value);
+
+    suggestions.innerHTML = "";
+
+
+    //Change so the suggestions are not flickering
+    characters.forEach(element => {
+      
+    
+      const suggestion = GreateSuggestionDiv(element);
+
+      suggestion.addEventListener("click", () => {
+        AddGuess(element);
+      });
+
+      suggestions.insertAdjacentElement("beforeend",suggestion);
+    });
+      
+
+  });
 
 
 });

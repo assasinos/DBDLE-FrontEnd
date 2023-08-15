@@ -49,23 +49,25 @@
   .suggestions {
     position: absolute;
     z-index: 1000;
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
     background-color: var(--bs-light-bg-subtle);
-    padding: 10px;
     border-radius: 0.5rem;
     width: 100%;
     left: -.4%;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    
+    padding: 1rem;
 
     animation-duration: var(--Anim-Lenght);
     animation-name: anim-fade;
     animation-fill-mode: backwards;
 
   }
+
+
+
   @keyframes anim-fade {
     0% { opacity: 0; }
     100% { opacity: 1; }
@@ -88,14 +90,18 @@
   aspect-ratio: 1/1;
   -webkit-user-drag: none;
 }
-
+.suggestion img{
+  width: 10%;
+}
 .suggestion{
   padding: 5px;
   width: 90%;
-  border: 1px solid var(--Suggestion-border);
   margin: .3rem;
 
-
+  display: flex;
+  align-items: center;
+  gap: 1rem;  
+cursor: pointer;
 }
 .suggestion:hover{
   
