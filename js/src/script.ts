@@ -40,20 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Could not find Guess input");
     })();
 
-  //Temporary code to test the styling
-  characterGuessContainer.insertAdjacentElement(
-    "afterbegin",
-    CreateGuessDiv(dailyCharacter)
-  );
-  characterGuessContainer.insertAdjacentElement(
-    "afterbegin",
-    CreateGuessDiv(allCharacters[0])
-  );
-  characterGuessContainer.insertAdjacentElement(
-    "afterbegin",
-    CreateGuessDiv(allCharacters[12])
-  );
-  //
 
   //Get all characters based on the input
   function GetSuggestions(value: string): Array<CharacterTypes.Character> {
@@ -146,8 +132,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
+  function AddGuess(character :CharacterTypes.Character) : void {
+    characterGuessContainer.insertAdjacentElement(
+      "afterbegin",
+      CreateGuessDiv(character)
+    );
+  }
+
+
+  //Add the guess
   onsubmit = (e) => {
     e.preventDefault();
+
+    if(input.value.length < 3) return;
+
+
+    const characters = GetSuggestions(input.value);
+    if(characters.length < 1) return;
+
+    AddGuess(characters[0]);
+    allCharacters.splice(allCharacters.indexOf(characters[0]), 1);
+    console.log(allCharacters);
+    input.value = "";
+    input.blur();
   };
 
   //Event listeners
@@ -165,4 +172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       suggestions.classList.toggle("d-flex");
     }, 500);
   });
+
+
+
 });
