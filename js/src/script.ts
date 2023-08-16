@@ -59,10 +59,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     guessDiv
       .insertAdjacentElement("beforeend", CreateGuessCell(character.Gender))
       ?.classList.add(
-        dailyCharacter.Gender.includes(character.Gender)
-          ? dailyCharacter.Gender == character.Gender
-            ? "correct"
-            : "partial"
+        (dailyCharacter.Gender.includes(character.Gender) || character.Gender.includes(dailyCharacter.Gender))
+          ? dailyCharacter.Gender === character.Gender ? "correct" : "partial"
           : "incorrect"
       );
 
@@ -201,7 +199,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const characters  = GetSuggestions(input.value);
 
     suggestions.innerHTML = "";
-
 
     //Change so the suggestions are not flickering
     characters.forEach(element => {
