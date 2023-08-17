@@ -173,3 +173,10 @@ cursor: pointer;
   background-image: var(--Cell-Newer-Path);
   background-size: cover;
 }
+
+
+
+dialog img{
+  width: 15%;
+  aspect-ratio: 1/1;
+}

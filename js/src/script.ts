@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     )
   );
 
+  console.log(dailyCharacter);
+
   //Get all characters
   const allCharacters: Array<CharacterTypes.Character> = JSON.parse(
     await (await fetch(`${apihost}/api/Characters/GetAllCharacters`)).json()
@@ -157,7 +159,59 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     allCharacters.splice(allCharacters.indexOf(character), 1);
     input.blur();
+
+    if(character.CharacterName === dailyCharacter.CharacterName) {
+      
+
+
+      //Change to current number of tries
+      const tries = 0;
+
+      const modal = CreateWinModal(dailyCharacter, tries);
+      document.body.appendChild(modal);
+      
+    }
   }
+
+
+  //Create the winning modal 
+
+  //TODO: Make it prettier 
+  function CreateWinModal(character : CharacterTypes.Character, numberOfTries : number): HTMLDialogElement {
+    const dialogElement: HTMLDialogElement = document.createElement("dialog");
+    dialogElement.id = "winmodal";
+    dialogElement.setAttribute("open","");
+    dialogElement.classList.add("card", "text-center");
+
+
+    const cardBody: HTMLDivElement = document.createElement("div");
+    cardBody.classList.add("card-body", "d-flex", "flex-column", "align-items-center", "gap-4");
+
+    const title: HTMLHeadingElement = document.createElement("h2");
+    title.classList.add("card-title");
+    title.textContent = "gg You Win!";
+    cardBody.appendChild(title);
+
+    const characterInfo: HTMLDivElement = document.createElement("div");
+    const characterImage: HTMLImageElement = document.createElement("img");
+    characterImage.src = `/assets/${character.Image.ImagePath}`;
+    characterImage.alt = character.CharacterName;
+    characterInfo.appendChild(characterImage);
+
+    const characterName: HTMLSpanElement = document.createElement("span");
+    characterName.innerHTML = `You guessed: <span class="fw-bold fs-2">${character.CharacterName}</span>`;
+    characterInfo.appendChild(characterName);
+    cardBody.appendChild(characterInfo);
+
+    const description: HTMLParagraphElement = document.createElement("p");
+    description.classList.add("card-text");
+    description.textContent = `You guessed the character in ${numberOfTries} guesses!`;
+    cardBody.appendChild(description);
+
+    dialogElement.appendChild(cardBody);
+
+    return dialogElement;
+}
 
 
   //Add the guess
