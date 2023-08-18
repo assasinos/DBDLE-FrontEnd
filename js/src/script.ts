@@ -5,14 +5,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   //For local testing
   //Change it to the actual api host
   const apihost: string = "http://localhost:5203";
-
   //Get the daily character
   //This is a base64 encoded string so it's not easily readable
+  const dailyCharacterBase64 :string = await (await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()
   const dailyCharacter: CharacterTypes.Character = JSON.parse(
     atob(
-      await (await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()
+      dailyCharacterBase64
     )
   );
+
+  const last = localStorage.getItem("lastDailyCharacter") ?? localStorage.setItem("lastDailyCharacter", dailyCharacterBase64) ;
+
+  if(last !== dailyCharacterBase64) {
+    localStorage.setItem("lastDailyCharacter", dailyCharacterBase64);
+    localStorage.setItem("guesses", "[]");
+  }
 
   console.log(dailyCharacter);
 
@@ -42,6 +49,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Could not find Guess input");
     })();
 
+    const guesses = localStorage.getItem("guesses") ?? "[]";
+
+    const guessesArray : Array<CharacterTypes.Character> = JSON.parse(guesses);
+  
+    let numberOfTries :number = guessesArray.length;
+  
+    guessesArray.forEach(guess => {
+      AddGuess(guess,false);
+    });
+
 
   //Get all characters based on the input
   function GetSuggestions(value: string): Array<CharacterTypes.Character> {
@@ -51,7 +68,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   //Create a div for the guess
-  function CreateGuessDiv(character: CharacterTypes.Character): HTMLDivElement {
+  function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): HTMLDivElement {
+
+    //TODO: Implement animation
     const guessDiv: HTMLDivElement = document.createElement("div");
     guessDiv.classList.add("cell-container");
     
@@ -150,28 +169,38 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
-  function AddGuess(character :CharacterTypes.Character) : void {
-    input.value = "";
-    suggestions.innerHTML = "";
+  function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : void {
+    if(persistence) {
+      numberOfTries++;
+      const storage = localStorage.getItem("guesses");
+      const guesses = storage ? JSON.parse(storage) : [];
+      guesses.push(character);
+      localStorage.setItem("guesses", JSON.stringify(guesses));
+      input.value = "";
+      suggestions.innerHTML = "";
+      input.blur();
+    }
+
     characterGuessContainer.insertAdjacentElement(
       "afterbegin",
-      CreateGuessDiv(character)
+      CreateGuessDiv(character, persistence)
     );
     allCharacters.splice(allCharacters.indexOf(character), 1);
-    input.blur();
+    
+
+    //Persistence
+
 
     if(character.CharacterName === dailyCharacter.CharacterName) {
       
 
 
-      //Change to current number of tries
-      const tries = 0;
-
-      const modal = CreateWinModal(dailyCharacter, tries);
+      const modal = CreateWinModal(dailyCharacter, numberOfTries);
       document.body.appendChild(modal);
       
     }
   }
+
 
 
   //Create the winning modal 
