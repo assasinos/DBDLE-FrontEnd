@@ -16,7 +16,8 @@
   --Suggestion-border: #bbbbbb;
 
 
-  --Anim-Lenght: .5s;
+  --Anim-Fade-Lenght: .5s;
+  --Anim-Reveal-Lenght: .5s;
 
 }
 
@@ -60,7 +61,7 @@
     flex-direction: column;
     padding: 1rem;
 
-    animation-duration: var(--Anim-Lenght);
+    animation-duration: var(--Anim-Fade-Lenght);
     animation-name: anim-fade;
     animation-fill-mode: backwards;
 
@@ -74,7 +75,7 @@
   }
 
   .disappear{
-    animation-duration: var(--Anim-Lenght);
+    animation-duration: var(--Anim-Fade-Lenght);
     animation-name: anim-disappear;
     animation-fill-mode: forwards;
     
@@ -179,4 +180,15 @@ cursor: pointer;
 dialog img{
   width: 15%;
   aspect-ratio: 1/1;
+}
+
+.reveal{
+  animation-duration: var(--Anim-Reveal-Lenght);
+  animation-name: anim-reveal;
+  animation-fill-mode: forwards;
+}
+
+@keyframes anim-reveal {
+  from {transform: rotateX(90deg);}
+  to {transform: rotateX(0deg);}
 }
