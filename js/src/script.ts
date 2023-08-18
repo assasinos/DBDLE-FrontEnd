@@ -9,11 +9,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   //Get the daily character
   //This is a base64 encoded string so it's not easily readable
+  const dailyCharacterBase64 :string = await (await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()
   const dailyCharacter: CharacterTypes.Character = JSON.parse(
     atob(
-      await (await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()
+      dailyCharacterBase64
     )
   );
+
+  const last = localStorage.getItem("lastDailyCharacter") ?? localStorage.setItem("lastDailyCharacter", dailyCharacterBase64) ;
+
+  if(last !== dailyCharacterBase64) {
+    localStorage.setItem("lastDailyCharacter", dailyCharacterBase64);
+    localStorage.setItem("guesses", "[]");
+  }
 
   console.log(dailyCharacter);
 
@@ -43,11 +51,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Could not find Guess input");
     })();
 
+
     const guesses = localStorage.getItem("guesses") ?? "[]";
 
     const guessesArray : Array<CharacterTypes.Character> = JSON.parse(guesses);
   
-    const numberOfTries = guessesArray.length;
+    let numberOfTries :number = guessesArray.length;
   
     guessesArray.forEach(guess => {
       console.log(guess);
@@ -166,7 +175,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : void {
     if(persistence) {
-
+      numberOfTries++;
       const storage = localStorage.getItem("guesses");
       const guesses = storage ? JSON.parse(storage) : [];
       guesses.push(character);
@@ -190,10 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       
 
 
-      //Change to current number of tries
-      const tries = 0;
-
-      const modal = CreateWinModal(dailyCharacter, tries);
+      const modal = CreateWinModal(dailyCharacter, numberOfTries);
       document.body.appendChild(modal);
       
     }
