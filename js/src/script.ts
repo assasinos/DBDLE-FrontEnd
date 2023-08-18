@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   //For local testing
   //Change it to the actual api host
   const apihost: string = "http://localhost:5203";
-
-
   //Get the daily character
   //This is a base64 encoded string so it's not easily readable
   const dailyCharacterBase64 :string = await (await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()
@@ -51,7 +49,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Could not find Guess input");
     })();
 
-
     const guesses = localStorage.getItem("guesses") ?? "[]";
 
     const guessesArray : Array<CharacterTypes.Character> = JSON.parse(guesses);
@@ -59,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let numberOfTries :number = guessesArray.length;
   
     guessesArray.forEach(guess => {
-      console.log(guess);
       AddGuess(guess,false);
     });
 
