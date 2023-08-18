@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   //Change it to the actual api host
   const apihost: string = "http://localhost:5203";
 
+
   //Get the daily character
   //This is a base64 encoded string so it's not easily readable
   const dailyCharacter: CharacterTypes.Character = JSON.parse(
@@ -42,6 +43,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Could not find Guess input");
     })();
 
+    const guesses = localStorage.getItem("guesses") ?? "[]";
+
+    const guessesArray : Array<CharacterTypes.Character> = JSON.parse(guesses);
+  
+    const numberOfTries = guessesArray.length;
+  
+    guessesArray.forEach(guess => {
+      console.log(guess);
+      AddGuess(guess,false);
+    });
+
 
   //Get all characters based on the input
   function GetSuggestions(value: string): Array<CharacterTypes.Character> {
@@ -51,7 +63,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   //Create a div for the guess
-  function CreateGuessDiv(character: CharacterTypes.Character): HTMLDivElement {
+  function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): HTMLDivElement {
+
+    //TODO: Implement animation
     const guessDiv: HTMLDivElement = document.createElement("div");
     guessDiv.classList.add("cell-container");
     
@@ -150,15 +164,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
-  function AddGuess(character :CharacterTypes.Character) : void {
-    input.value = "";
-    suggestions.innerHTML = "";
+  function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : void {
+    if(persistence) {
+
+      const storage = localStorage.getItem("guesses");
+      const guesses = storage ? JSON.parse(storage) : [];
+      guesses.push(character);
+      localStorage.setItem("guesses", JSON.stringify(guesses));
+      input.value = "";
+      suggestions.innerHTML = "";
+      input.blur();
+    }
+
     characterGuessContainer.insertAdjacentElement(
       "afterbegin",
-      CreateGuessDiv(character)
+      CreateGuessDiv(character, persistence)
     );
     allCharacters.splice(allCharacters.indexOf(character), 1);
-    input.blur();
+    
+
+    //Persistence
+
 
     if(character.CharacterName === dailyCharacter.CharacterName) {
       
@@ -172,6 +198,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       
     }
   }
+
 
 
   //Create the winning modal 
