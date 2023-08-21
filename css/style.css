@@ -21,12 +21,21 @@
 
 }
 
+.text-overlay {
+  position: absolute;
+  top: 50;
+  left: 50;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
 .cell {
   /* Square */
   /* I think this should be changed */
   width: 16.666666%;
   aspect-ratio: 1/1;
-
+  position: relative;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -186,6 +195,7 @@ dialog img{
   animation-duration: var(--Anim-Reveal-Lenght);
   animation-name: anim-reveal;
   animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
 }
 
 @keyframes anim-reveal {

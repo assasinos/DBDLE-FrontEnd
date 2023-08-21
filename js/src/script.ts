@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   //Create a div for the guess
   function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): void {
 
-    //TODO: Implement animation
     const guessDiv: HTMLDivElement = document.createElement("div");
     guessDiv.classList.add("cell-container");
     
@@ -185,10 +184,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cellDiv: HTMLDivElement = document.createElement("div");
     cellDiv.classList.add("cell", "border", "border-dark");
 
+    //Name overlay
+    const characterNameSpan: HTMLSpanElement = document.createElement("span");
+    characterNameSpan.innerText = characterName;
+    characterNameSpan.classList.add("text-overlay", "d-none");
+    cellDiv.insertAdjacentElement("beforeend", characterNameSpan);
+
     const img: HTMLImageElement = document.createElement("img");
     img.src = "/assets/" + src;
     img.alt = characterName;
+
+
+    //Show the name on hover
+    let hideTimeout :NodeJS.Timeout;
+
+    img.addEventListener("mouseover", () => {
+      characterNameSpan.classList.remove("d-none");
+      clearTimeout(hideTimeout);
+    });
+    
+    img.addEventListener("mouseleave", () => {
+      hideTimeout = setTimeout(() => {
+        characterNameSpan.classList.add("d-none");
+      }, 10);
+    });
+    
+    characterNameSpan.addEventListener("mouseover", () => {
+      clearTimeout(hideTimeout); 
+    });
+    
+    characterNameSpan.addEventListener("mouseleave", () => {
+      characterNameSpan.classList.add("d-none");
+    });
     cellDiv.insertAdjacentElement("beforeend", img);
+
+
     return cellDiv;
   }
 
