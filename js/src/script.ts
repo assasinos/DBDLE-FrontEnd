@@ -4,18 +4,19 @@ export { CharacterTypes };
 document.addEventListener("DOMContentLoaded", async () => {
   //For local testing
   //Change it to the actual api host
-  const apihost: string = "http://localhost:5203";
+  const apiHost: string = "http://localhost:5203";
   //Get the daily character
   //This is a base64 encoded string so it's not easily readable
-  const dailyCharacterBase64 :string = await (await fetch(`${apihost}/api/Characters/GetDailyCharacter`)).json()
+  const dailyCharacterBase64 :string = await (await fetch(`${apiHost}/api/Characters/GetDailyCharacter`)).json()
   const dailyCharacter: CharacterTypes.Character = JSON.parse(
     atob(
       dailyCharacterBase64
     )
   );
 
-  const last = localStorage.getItem("lastDailyCharacter") ?? localStorage.setItem("lastDailyCharacter", dailyCharacterBase64) ;
 
+
+  const last = localStorage.getItem("lastDailyCharacter") ?? localStorage.setItem("lastDailyCharacter", dailyCharacterBase64) ;
   if(last !== dailyCharacterBase64) {
     localStorage.setItem("lastDailyCharacter", dailyCharacterBase64);
     localStorage.setItem("guesses", "[]");
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   //Get all characters
   const allCharacters: Array<CharacterTypes.Character> = JSON.parse(
-    await (await fetch(`${apihost}/api/Characters/GetAllCharacters`)).json()
+    await (await fetch(`${apiHost}/api/Characters/GetAllCharacters`)).json()
   );
 
   //Get suggestions div
@@ -68,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   //Create a div for the guess
-  function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): HTMLDivElement {
+  function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): void {
 
     //TODO: Implement animation
     const guessDiv: HTMLDivElement = document.createElement("div");
@@ -76,55 +77,77 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     guessDiv.insertAdjacentElement("beforeend", CreateGuessCellImg(character.Image.ImagePath, character.CharacterName));
 
+    characterGuessContainer.insertAdjacentElement("afterbegin", guessDiv);
+
+
+    //Placeholders
+    for (let i = 0; i < 5; i++)
+    {
+      guessDiv.insertAdjacentElement("beforeend", CreateGuessCell(""));
+    }
+
+
+
+    
     //Can be Male and Female at the same time
-    guessDiv
-      .insertAdjacentElement("beforeend", CreateGuessCell(character.Gender))
-      ?.classList.add(
+
+    guessDiv.replaceChild(CreateGuessCell(character.Gender),guessDiv.childNodes[1]);
+
+    guessDiv.children[1]?.classList.add(
         (dailyCharacter.Gender.includes(character.Gender) || character.Gender.includes(dailyCharacter.Gender))
           ? dailyCharacter.Gender === character.Gender ? "correct" : "partial"
-          : "incorrect"
+          : "incorrect",
+          "reveal"
       );
 
-    guessDiv
-      .insertAdjacentElement("beforeend", CreateGuessCell(character.Origin))
-      ?.classList.add(
-        dailyCharacter.Origin == character.Origin ? "correct" : "incorrect"
-      );
+      setTimeout(() => {
+        guessDiv.replaceChild(CreateGuessCell(character.Origin),guessDiv.childNodes[2]);
+        guessDiv.children[2]
+        ?.classList.add(
+          dailyCharacter.Origin == character.Origin ? "correct" : "incorrect",
+          "reveal"
+        );
+      }, 500);
 
-    guessDiv
-      .insertAdjacentElement(
-        "beforeend",
-        CreateGuessCell(character.Height.toString())
-      )
-      ?.classList.add(
-        dailyCharacter.Height == character.Height ? "correct" : "incorrect"
-      );
 
-    guessDiv
-      .insertAdjacentElement(
-        "beforeend",
-        CreateGuessCell(character.ReleaseYear.toString())
-      )
-      ?.classList.add(
-        ...(dailyCharacter.ReleaseYear == character.ReleaseYear
-          ? ["correct"]
-          : dailyCharacter.ReleaseYear > character.ReleaseYear
-          ? ["incorrect", "newer"]
-          : ["incorrect", "older"])
-      );
+      setTimeout(() => {
+        guessDiv.replaceChild(CreateGuessCell(character.Height.toString()),guessDiv.childNodes[3]);
 
-    guessDiv
-      .insertAdjacentElement(
-        "beforeend",
-        CreateGuessCell(character.Difficulty.toString())
-      )
-      ?.classList.add(
-        dailyCharacter.Difficulty == character.Difficulty
-          ? "correct"
-          : "incorrect"
-      );
+        guessDiv.children[3]
+        ?.classList.add(
+          dailyCharacter.Height == character.Height ? "correct" : "incorrect",
+          "reveal"
+        );
+      }, 1000);
 
-    return guessDiv;
+
+      setTimeout(() => {
+        guessDiv.replaceChild(CreateGuessCell(character.ReleaseYear.toString()),guessDiv.childNodes[4]);
+
+        guessDiv.children[4]
+        ?.classList.add(
+          ...(dailyCharacter.ReleaseYear == character.ReleaseYear
+            ? ["correct"]
+            : dailyCharacter.ReleaseYear > character.ReleaseYear
+            ? ["incorrect", "newer"]
+            : ["incorrect", "older"]),
+            "reveal"
+        );
+      }, 1500);
+
+      setTimeout(() => {
+      guessDiv.replaceChild(CreateGuessCell(character.Difficulty.toString()),guessDiv.childNodes[5]);
+
+      guessDiv.children[5]
+        ?.classList.add(
+          dailyCharacter.Difficulty == character.Difficulty
+            ? "correct"
+            : "incorrect",
+            "reveal"
+        );
+      }, 2000);
+
+
   }
 
   //Create a category cell with the value
@@ -181,16 +204,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       input.blur();
     }
 
-    characterGuessContainer.insertAdjacentElement(
-      "afterbegin",
-      CreateGuessDiv(character, persistence)
-    );
+    CreateGuessDiv(character, persistence);
+
+    // characterGuessContainer.insertAdjacentElement(
+    //   "afterbegin",
+      
+    // );
     allCharacters.splice(allCharacters.indexOf(character), 1);
     
-
-    //Persistence
-
-
     if(character.CharacterName === dailyCharacter.CharacterName) {
       
 
