@@ -1,0 +1,26 @@
+{
+  "name": "dbdle-frontend",
+  "version": "1.0.0",
+  "description": "DBDLE is a web application that lets you guess the characters from the Dead By Daylight game. ",
+  "main": "webpack.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/assasinos/DBDLE-FrontEnd.git"
+  },
+  "author": "Jakub Wiśniewski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/assasinos/DBDLE-FrontEnd/issues"
+  },
+  "homepage": "https://github.com/assasinos/DBDLE-FrontEnd#readme",
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2"
+  }
+}
