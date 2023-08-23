@@ -1,6 +1,8 @@
 import { CharacterTypes } from "./types/character";
 export { CharacterTypes };
 
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   //For local testing
   //Change it to the actual api host
@@ -22,12 +24,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem("guesses", "[]");
   }
 
-  console.log(dailyCharacter);
 
   //Get all characters
   const allCharacters: Array<CharacterTypes.Character> = JSON.parse(
     await (await fetch(`${apiHost}/api/Characters/GetAllCharacters`)).json()
   );
+
+  //Maybe change to React project in the future
+  //Create input element
+  const inputElement: HTMLInputElement = document.createElement("input");
+  inputElement.type = "text";
+  inputElement.placeholder = "Enter Character Name";
+  inputElement.classList.add("form-control");
+
+  //Create submit button
+  const submitButton: HTMLInputElement = document.createElement("input");
+  submitButton.type = "submit";
+  submitButton.value = "Guess";
+  submitButton.classList.add("btn", "btn-outline-primary");
+
+  //Insert input and submit button into the form
+  const inputGroup: HTMLElement = document.getElementById("input-div") ?? (() => { throw new Error("Could not find input-div element"); })();
+  
+  //clear the input group
+  inputGroup.innerHTML = "";
+
+  inputGroup.insertAdjacentElement("beforeend", inputElement);
+  inputGroup.insertAdjacentElement("beforeend", submitButton);
+  
+
+
+
 
   //Get suggestions div
   const suggestions: HTMLDivElement =
@@ -43,12 +70,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Could not find guess-container element");
     })();
 
-  //Get input element
-  const input: HTMLInputElement =
-    (document.getElementById("guess-input") as HTMLInputElement) ||
-    (() => {
-      throw new Error("Could not find Guess input");
-    })();
 
     const guesses = localStorage.getItem("guesses") ?? "[]";
 
@@ -229,9 +250,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       const guesses = storage ? JSON.parse(storage) : [];
       guesses.push(character);
       localStorage.setItem("guesses", JSON.stringify(guesses));
-      input.value = "";
+      inputElement.value = "";
       suggestions.innerHTML = "";
-      input.blur();
+      inputElement.blur();
     }
 
     CreateGuessDiv(character, persistence);
@@ -300,7 +321,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-    const characters = GetSuggestions(input.value);
+    const characters = GetSuggestions(inputElement.value);
     if(characters.length < 1) return;
 
     AddGuess(characters[0]);
@@ -310,27 +331,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   //Event listeners
 
   //Show suggestions on input focus
-  input.addEventListener("focus", () => {
+  inputElement.addEventListener("focus", () => {
     suggestions.classList.toggle("disappear");
     suggestions.classList.toggle("d-flex");
   });
 
   //Hide suggestions on input blur
-  input.addEventListener("blur", async () => {
+  inputElement.addEventListener("blur", async () => {
     suggestions.classList.toggle("disappear");
     await setTimeout(() => {
       suggestions.classList.toggle("d-flex");
     }, 500);
   });
 
-  input.addEventListener("input", (e) => {
+  inputElement.addEventListener("input", (e) => {
 
-    if(input.value.length < 1) 
+    if(inputElement.value.length < 1) 
     {
       suggestions.innerHTML = "";
       return;
     }
-    const characters  = GetSuggestions(input.value);
+    const characters  = GetSuggestions(inputElement.value);
 
     suggestions.innerHTML = "";
 
