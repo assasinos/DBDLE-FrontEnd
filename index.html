@@ -9,13 +9,18 @@
 </head>
 <body>
     
+
+
+
     <main class="container-fluid d-flex justify-content-center align-items-center my-5 text-center">
         <div class="card p-4">
             <h1 class="card-header">DBDLE</h1>
             <form id="searchForm" class="card-body">
-                <div class="input-group">
-                    <input id="guess-input" type="text" class="form-control" placeholder="Enter Character Name">
-                    <input type="submit" value="Guess" class="btn btn-outline-primary">
+                <div class="input-group" id="input-div">
+                    <div class="form-control">
+                        Loading Characters
+                        <div class="loading spinner-border"></div>
+                    </div>
                 </div>
 
                 <div class="disappear suggestions" id="suggestions">
