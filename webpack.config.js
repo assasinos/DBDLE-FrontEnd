@@ -5,19 +5,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
 
-module.exports = {
+module.exports = [{
     entry: './js/src/script.js', 
     output: {
         filename: 'bundle.js', 
-        path:  __dirname + '/js/dist/' 
-    },
-    mode: 'development',
-};
-
-module.exports = {
+        path:  __dirname + '/js/dist' 
+    }
+},
+{
   entry: "./css/style.css", // Path to your main CSS file
   output: {
-    path: __dirname + "/css/", // Output directory
+    path: __dirname + "/css", // Output directory
   },
   module: {
     rules: [
@@ -36,5 +34,5 @@ module.exports = {
     minimizer: [
       new CssMinimizerPlugin(), // Minimize CSS using CssMinimizerPlugin
     ],
-  },
-};
+  }
+}];
