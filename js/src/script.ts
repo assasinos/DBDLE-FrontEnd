@@ -4,6 +4,7 @@ export { CharacterTypes };
 
 
 document.addEventListener("DOMContentLoaded", async () => {
+
   //For local testing
   //Change it to the actual api host
   const apiHost: string = "http://localhost:5203";
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
+  //Check if the daily character has changed
   const last = localStorage.getItem("lastDailyCharacter") ?? localStorage.setItem("lastDailyCharacter", dailyCharacterBase64) ;
   if(last !== dailyCharacterBase64) {
     localStorage.setItem("lastDailyCharacter", dailyCharacterBase64);
@@ -71,12 +73,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     })();
 
 
+    //Get the guesses from local storage
     const guesses = localStorage.getItem("guesses") ?? "[]";
 
     const guessesArray : Array<CharacterTypes.Character> = JSON.parse(guesses);
   
     let numberOfTries :number = guessesArray.length;
   
+    //Add the previous guesses to the page
     guessesArray.forEach(guess => {
       AddGuess(guess,false);
     });
@@ -181,6 +185,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
+  
   function GreateSuggestionDiv(character : CharacterTypes.Character):HTMLDivElement{
     const suggestionDiv: HTMLDivElement = document.createElement("div");
     suggestionDiv.classList.add("suggestion");
@@ -244,6 +249,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : void {
+    //If the character is send by previous guesses
     if(persistence) {
       numberOfTries++;
       const storage = localStorage.getItem("guesses");
@@ -257,18 +263,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     CreateGuessDiv(character, persistence);
 
-    // characterGuessContainer.insertAdjacentElement(
-    //   "afterbegin",
-      
-    // );
+    //Remove the character from the list
     allCharacters.splice(allCharacters.indexOf(character), 1);
     
+
+    //Check if the character is the daily character
     if(character.CharacterName === dailyCharacter.CharacterName) {
       
 
 
       const modal = CreateWinModal(dailyCharacter, numberOfTries);
-      document.body.appendChild(modal);
+      document.body.querySelector("main")?.appendChild(modal);
+      modal.scrollIntoView();
       
     }
   }
