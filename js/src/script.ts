@@ -270,12 +270,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Check if the character is the daily character
     if(character.CharacterName === dailyCharacter.CharacterName) {
       
-
-
+      setTimeout(() => {
+        
       const modal = CreateWinModal(dailyCharacter, numberOfTries);
       document.body.querySelector("main")?.appendChild(modal);
       modal.scrollIntoView();
-      
+     
+      //Block the input
+      inputElement.disabled = true;
+
+        //block the submit
+        submitButton.disabled = true;
+
+      }, 2500);
+
+
     }
   }
 
@@ -326,8 +335,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault();
 
 
+    //Prevent submitting if the input is empty
+    if(inputElement.value.length < 1) return;
 
+    
     const characters = GetSuggestions(inputElement.value);
+
+    //Prevent submitting if there are no suggestions
     if(characters.length < 1) return;
 
     AddGuess(characters[0]);
