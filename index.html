@@ -1,60 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBDLE</title>
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.min.css">
-</head>
-<body>
-    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DBDLE</title>
+        <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.min.css">
+    </head>
+    <body>
 
 
-
-    <main class="container-fluid d-flex justify-content-center align-items-center my-5 text-center flex-column gap-2">
-        <div class="card p-4">
-            <h1 class="card-header">DBDLE</h1>
-            <form id="searchForm" class="card-body">
-                <div class="input-group" id="input-div">
-                    <div class="form-control">
-                        Loading Characters
-                        <div class="loading spinner-border"></div>
+        <main class="container-fluid d-flex justify-content-center align-items-center m-5 text-center flex-column gap-2">
+            <div class="card p-4 overflow-hidden">
+                <h1 class="card-header">DBDLE</h1>
+                <form id="searchForm" class="card-body">
+                    <div class="input-group" id="input-div">
+                        <div class="form-control">
+                            Loading Characters
+                            <div class="loading spinner-border"></div>
+                        </div>
                     </div>
+
+                    <div class="disappear suggestions" id="suggestions"></div>
+
+                </form>
+                <div class="mb-2 guess-container d-flex flex-column">
+                    <div class="cell-container">
+                        <div class="cell border-bottom border-dark">
+                            <span>Character</span>
+                        </div>
+                        <div class="cell border-bottom border-dark">
+                            <span>Gender</span>
+                        </div>
+                        <div class="cell border-bottom border-dark">
+                            <span>Origin</span>
+                        </div>
+                        <div class="cell border-bottom border-dark">
+                            <span>Height</span>
+                        </div>
+                        <div class="cell border-bottom border-dark">
+                            <span>Release Year</span>
+                        </div>
+                        <div class="cell border-bottom border-dark">
+                            <span>Difficulty</span>
+                        </div>
+                    </div>
+                    <div id="guess-container"></div>
+
+
                 </div>
 
-                <div class="disappear suggestions" id="suggestions">
+            </div>
+        </main>
+
+        <footer class="text-center py-3">
+            <p>2023 Jakub Wiśniewski</p>
+            <div class="row row-cols-1">
+                <div class="col">
+                    <a class="link-info" href="https://github.com/assasinos" target="_blank"><img src="/assets/MdiGithub.svg" alt="Github Logo">Github</a>
                 </div>
-
-            </form>
-        <div class="mb-2 guess-container d-flex flex-column" >
-            <div class="cell-container">
-                <div class="cell border-bottom border-dark"><span>Character</span></div>
-                <div class="cell border-bottom border-dark"><span>Gender</span></div>
-                <div class="cell border-bottom border-dark"><span>Origin</span></div>
-                <div class="cell border-bottom border-dark"><span>Height</span></div>
-                <div class="cell border-bottom border-dark"><span>Release Year</span></div>
-                <div class="cell border-bottom border-dark"><span>Difficulty</span></div>
             </div>
-            <div id="guess-container">
-
-            </div>
-
-            
-        </div>
-        
-        </div>
-    </main>
-
-    <footer class="text-center py-3">
-        <p>2023 Jakub Wiśniewski</p>
-        <div class="row row-cols-1">
-            <div class="col">
-                <a class="link-info" href="https://github.com/assasinos" target="_blank"><img src="/assets/MdiGithub.svg" alt="Github Logo">Github</a>                
-            </div>
-        </div>
-      </footer>
-    <script src="/js/dist/bundle.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
+        </footer>
+        <script src="/js/dist/bundle.js"></script>
+        <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>

@@ -49,11 +49,13 @@
   width: 33vw;
   min-width: 30rem;
   max-width: 633px;
+  overflow: auto;
 }
 .cell-container {
   display: flex;
   gap: 0.5rem;
   min-width: 30rem;
+
 }
 
   .suggestions {
