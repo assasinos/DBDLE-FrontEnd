@@ -80,6 +80,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     let numberOfTries :number = guessesArray.length;
   
+    console.log(allCharacters);
+
     //Add the previous guesses to the page
     guessesArray.forEach(guess => {
       AddGuess(guess,false);
@@ -261,10 +263,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       inputElement.blur();
     }
 
+    //Remove the character from the list
+    const characterIndex = allCharacters.findIndex((char: CharacterTypes.Character) => {
+      return char.CharacterName === character.CharacterName; // Assuming "id" is the unique identifier property
+    });
+    allCharacters.splice(characterIndex, 1);
+
+
     CreateGuessDiv(character, persistence);
 
-    //Remove the character from the list
-    allCharacters.splice(allCharacters.indexOf(character), 1);
     
 
     //Check if the character is the daily character
