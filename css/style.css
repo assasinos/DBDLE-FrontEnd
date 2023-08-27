@@ -46,17 +46,23 @@
 
 /* Change The overflow to work with phones */
 .guess-container {
-  width: 33vw;
   min-width: 30rem;
   max-width: 633px;
-  overflow: auto;
 }
+
 .cell-container {
   display: flex;
   gap: 0.5rem;
   min-width: 30rem;
-
 }
+
+/* Make the card 100% so it doesn't overflow */
+@media screen and (max-width: 550px) {
+  .card{
+    width: 100%;
+  }
+}
+  
 
   .suggestions {
     position: absolute;
