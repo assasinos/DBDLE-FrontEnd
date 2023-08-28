@@ -8,16 +8,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   //For local testing
   //Change it to the actual api host
   const apiHost: string = "http://localhost:5203";
+
+  const dailyCharacterBase64 = await GetDailyCharacterString() ?? FetchError("We couldn't get the daily character. ")!;
   //Get the daily character
   //This is a base64 encoded string so it's not easily readable
-  const dailyCharacterBase64 :string = await (await fetch(`${apiHost}/api/Characters/GetDailyCharacter`)).json()
   const dailyCharacter: CharacterTypes.Character = JSON.parse(
     atob(
       dailyCharacterBase64
     )
   );
-
-
 
   //Check if the daily character has changed
   const last = localStorage.getItem("lastDailyCharacter") ?? localStorage.setItem("lastDailyCharacter", dailyCharacterBase64) ;
@@ -28,9 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   //Get all characters
-  const allCharacters: Array<CharacterTypes.Character> = JSON.parse(
-    await (await fetch(`${apiHost}/api/Characters/GetAllCharacters`)).json()
-  );
+  const allCharacters: Array<CharacterTypes.Character> = await GetAllCharacters() ?? FetchError("We couldn't get the characters. ")!;
 
   //Maybe change to React project in the future
   //Create input element
@@ -265,7 +262,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     //Remove the character from the list
     const characterIndex = allCharacters.findIndex((char: CharacterTypes.Character) => {
-      return char.CharacterName === character.CharacterName; // Assuming "id" is the unique identifier property
+      return char.CharacterName === character.CharacterName;
     });
     allCharacters.splice(characterIndex, 1);
 
@@ -336,6 +333,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     return dialogElement;
 }
 
+  async function GetDailyCharacterString(): Promise<string | null> {
+    try {
+      return await (await fetch(`${apiHost}/api/Characters/GetDailyCharacter`)).json();
+    } catch (error) {
+      return null;
+    }
+  }
+  async function GetAllCharacters():  Promise<Array<CharacterTypes.Character> | null> {
+    try {
+      return JSON.parse(
+        await (await fetch(`${apiHost}/api/Characters/GetAllCharacters`)).json()
+      );
+    } catch (error) {
+      return null;
+    }
+  }
 
   //Add the guess
   onsubmit = (e) => {
@@ -398,5 +411,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   });
 
+  function FetchError(error :string) :void {
+      
+    const dialogElement: HTMLDialogElement = document.createElement("dialog");
+    dialogElement.classList.add("card", "text-center", "error-modal");
+    
+
+    const cardBody: HTMLDivElement = document.createElement("div");
+    cardBody.classList.add("card-body", "d-flex", "flex-column", "align-items-center", "gap-4");
+
+    const title: HTMLHeadingElement = document.createElement("h2");
+    title.classList.add("card-title");
+    title.textContent = "Oops! Something went wrong.";
+    cardBody.appendChild(title);
+
+    const description: HTMLParagraphElement = document.createElement("p");
+    description.classList.add("card-text");
+    description.textContent = error + " Please try again later.";
+
+
+    cardBody.appendChild(description);
+
+    const button: HTMLButtonElement = document.createElement("button");
+    button.classList.add("btn", "btn-primary");
+    button.textContent = "Close";
+    button.addEventListener("click", () => {
+      dialogElement.close();
+      dialogElement.remove();
+    });
+
+
+    cardBody.appendChild(button);
+    dialogElement.appendChild(cardBody);
+
+
+
+
+    document.body.appendChild(dialogElement);
+    dialogElement.showModal();
+
+  }
 
 });

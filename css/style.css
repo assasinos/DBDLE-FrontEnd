@@ -18,7 +18,7 @@
 
   --Anim-Fade-Lenght: .5s;
   --Anim-Reveal-Lenght: .5s;
-
+  --Anim-appear-Lenght: 2s;
 }
 
 .text-overlay {
@@ -57,12 +57,22 @@
   min-width: 30rem;
 }
 
-/* Make the card 100% so it doesn't overflow */
-@media screen and (max-width: 550px) {
-  .card{
-    width: 100%;
-  }
+.error-modal{
+  height: 33vh;
+  width: 33vw;
+
+  animation-duration: var(--Anim-appear-Lenght);
+  animation-name: appear;
+  animation-fill-mode: backwards;
+  animation-timing-function: ease-in-out;
 }
+
+@keyframes appear {
+  from {transform: translateY(-33vh);}
+  to {transform: translateY(0px);}
+}
+
+
   
 
   .suggestions {
@@ -210,4 +220,16 @@ dialog img{
 @keyframes anim-reveal {
   from {transform: rotateX(90deg);}
   to {transform: rotateX(0deg);}
+}
+
+@media screen and (max-width: 550px) {
+  /* Make the card 100% so it doesn't overflow */
+  .card{
+    width: 100%;
+  }
+  #errormodal{
+    height: inherit;
+    width: inherit;
+  }
+
 }
