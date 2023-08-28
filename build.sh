@@ -2,7 +2,7 @@
 
 printf 'Compiling TS...\n'
 
-tsc
+npx tsc
 
 printf 'Bundling...\n'
 npx webpack --config webpack.config.js
