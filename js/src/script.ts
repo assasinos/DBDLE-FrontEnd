@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     suggestionDiv.classList.add("suggestion");
 
     const img: HTMLImageElement = document.createElement("img");
-    img.src = "/assets/" + character.Image.ImagePath;
+    img.src = "assets/" + character.Image.ImagePath;
     img.alt = character.CharacterName;
     suggestionDiv.insertAdjacentElement("beforeend", img);
 
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     cellDiv.insertAdjacentElement("beforeend", characterNameSpan);
 
     const img: HTMLImageElement = document.createElement("img");
-    img.src = "/assets/" + src;
+    img.src = "assets/" + src;
     img.alt = characterName;
 
 
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const characterInfo: HTMLDivElement = document.createElement("div");
     const characterImage: HTMLImageElement = document.createElement("img");
-    characterImage.src = `/assets/${character.Image.ImagePath}`;
+    characterImage.src = `assets/${character.Image.ImagePath}`;
     characterImage.alt = character.CharacterName;
     characterInfo.appendChild(characterImage);
 
