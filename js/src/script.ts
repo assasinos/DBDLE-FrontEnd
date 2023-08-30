@@ -29,29 +29,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   //Get all characters
   const allCharacters: Array<CharacterTypes.Character> = await GetAllCharacters() ?? FetchError("We couldn't get the characters. ")!;
 
-  //Maybe change to React project in the future
-  //Create input element
-  const inputElement: HTMLInputElement = document.createElement("input");
-  inputElement.type = "text";
-  inputElement.placeholder = "Enter Character Name";
-  inputElement.classList.add("form-control");
-
-  //Create submit button
-  const submitButton: HTMLInputElement = document.createElement("input");
-  submitButton.type = "submit";
-  submitButton.value = "Guess";
-  submitButton.classList.add("btn", "btn-outline-primary");
-
-  //Insert input and submit button into the form
-  const inputGroup: HTMLElement = document.getElementById("input-div") ?? (() => { throw new Error("Could not find input-div element"); })();
-  
-  //clear the input group
-  inputGroup.innerHTML = "";
-
-  inputGroup.insertAdjacentElement("beforeend", inputElement);
-  inputGroup.insertAdjacentElement("beforeend", submitButton);
-  
-
 
 
 
@@ -77,13 +54,38 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     let numberOfTries :number = guessesArray.length;
   
-    console.log(allCharacters);
+
+      //Create input element
+  const inputElement: HTMLInputElement = document.createElement("input");
+  inputElement.type = "text";
+  inputElement.placeholder = "Enter Character Name";
+  inputElement.classList.add("form-control");
+
+  //Create submit button
+  const submitButton: HTMLInputElement = document.createElement("input");
+  submitButton.type = "submit";
+  submitButton.value = "Guess";
+  submitButton.classList.add("btn", "btn-outline-primary");
+
 
     //Add the previous guesses to the page
-    await guessesArray.forEach(async guess => {
-      await AddGuess(guess,false);
+    await Promise.all(guessesArray.map(async guess => {
+      await AddGuess(guess, false);
+    }));
 
-    });
+
+  //Maybe change to React project in the future
+
+  //Insert input and submit button into the form
+  const inputGroup: HTMLElement = document.getElementById("input-div") ?? (() => { throw new Error("Could not find input-div element"); })();
+  
+  //clear the input group
+  inputGroup.innerHTML = "";
+
+  inputGroup.insertAdjacentElement("beforeend", inputElement);
+  inputGroup.insertAdjacentElement("beforeend", submitButton);
+  
+
 
 
   //Get all characters based on the input
@@ -248,8 +250,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
+ 
+  
   async function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : Promise<void> {
     //If the character is send by previous guesses
+    inputElement.disabled = true;
+    submitButton.disabled = true;
     if(persistence) {
       numberOfTries++;
       const storage = localStorage.getItem("guesses");
@@ -270,7 +276,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await CreateGuessDiv(character, persistence);
 
-    
+
 
     //Check if the character is the daily character
     if(character.CharacterName === dailyCharacter.CharacterName) {
@@ -284,8 +290,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         //block the submit
         submitButton.disabled = true;
+        return;
 
     }
+    inputElement.disabled = false;
+    submitButton.disabled = false;
   }
 
 
