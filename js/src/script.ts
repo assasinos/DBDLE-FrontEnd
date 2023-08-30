@@ -80,8 +80,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log(allCharacters);
 
     //Add the previous guesses to the page
-    guessesArray.forEach(guess => {
-      AddGuess(guess,false);
+    await guessesArray.forEach(async guess => {
+      await AddGuess(guess,false);
+
     });
 
 
@@ -92,8 +93,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
   }
 
+
+  function delay(milliseconds: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(resolve, milliseconds);
+    });
+  }
+
   //Create a div for the guess
-  function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): void {
+  async function CreateGuessDiv(character: CharacterTypes.Character, animation : boolean): Promise<void> {
 
     const guessDiv: HTMLDivElement = document.createElement("div");
     guessDiv.classList.add("cell-container");
@@ -122,43 +130,38 @@ document.addEventListener("DOMContentLoaded", async () => {
           : "incorrect",
           "reveal"
       );
+      await delay(500);
 
-      setTimeout(() => {
-        guessDiv.replaceChild(CreateGuessCell(character.Origin),guessDiv.childNodes[2]);
-        guessDiv.children[2]
-        ?.classList.add(
-          dailyCharacter.Origin == character.Origin ? "correct" : "incorrect",
+      guessDiv.replaceChild(CreateGuessCell(character.Origin),guessDiv.childNodes[2]);
+      guessDiv.children[2]
+      ?.classList.add(
+        dailyCharacter.Origin == character.Origin ? "correct" : "incorrect",
+        "reveal"
+      );
+      await delay(500);
+
+      guessDiv.replaceChild(CreateGuessCell(character.Height.toString()),guessDiv.childNodes[3]);
+
+      guessDiv.children[3]
+      ?.classList.add(
+        dailyCharacter.Height == character.Height ? "correct" : "incorrect",
+        "reveal"
+      );
+
+      await delay(500);
+      guessDiv.replaceChild(CreateGuessCell(character.ReleaseYear.toString()),guessDiv.childNodes[4]);
+
+      guessDiv.children[4]
+      ?.classList.add(
+        ...(dailyCharacter.ReleaseYear == character.ReleaseYear
+          ? ["correct"]
+          : dailyCharacter.ReleaseYear > character.ReleaseYear
+          ? ["incorrect", "newer"]
+          : ["incorrect", "older"]),
           "reveal"
-        );
-      }, 500);
+      );
+      await delay(500);
 
-
-      setTimeout(() => {
-        guessDiv.replaceChild(CreateGuessCell(character.Height.toString()),guessDiv.childNodes[3]);
-
-        guessDiv.children[3]
-        ?.classList.add(
-          dailyCharacter.Height == character.Height ? "correct" : "incorrect",
-          "reveal"
-        );
-      }, 1000);
-
-
-      setTimeout(() => {
-        guessDiv.replaceChild(CreateGuessCell(character.ReleaseYear.toString()),guessDiv.childNodes[4]);
-
-        guessDiv.children[4]
-        ?.classList.add(
-          ...(dailyCharacter.ReleaseYear == character.ReleaseYear
-            ? ["correct"]
-            : dailyCharacter.ReleaseYear > character.ReleaseYear
-            ? ["incorrect", "newer"]
-            : ["incorrect", "older"]),
-            "reveal"
-        );
-      }, 1500);
-
-      setTimeout(() => {
       guessDiv.replaceChild(CreateGuessCell(character.Difficulty.toString()),guessDiv.childNodes[5]);
 
       guessDiv.children[5]
@@ -168,8 +171,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             : "incorrect",
             "reveal"
         );
-      }, 2000);
-
 
   }
 
@@ -247,7 +248,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return cellDiv;
   }
 
-  function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : void {
+  async function AddGuess(character :CharacterTypes.Character, persistence : boolean = true) : Promise<void> {
     //If the character is send by previous guesses
     if(persistence) {
       numberOfTries++;
@@ -267,14 +268,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     allCharacters.splice(characterIndex, 1);
 
 
-    CreateGuessDiv(character, persistence);
+    await CreateGuessDiv(character, persistence);
 
     
 
     //Check if the character is the daily character
     if(character.CharacterName === dailyCharacter.CharacterName) {
-      
-      setTimeout(() => {
         
       const modal = CreateWinModal(dailyCharacter, numberOfTries);
       document.body.querySelector("main")?.appendChild(modal);
@@ -285,9 +284,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         //block the submit
         submitButton.disabled = true;
-
-      }, 2500);
-
 
     }
   }
@@ -351,7 +347,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   //Add the guess
-  onsubmit = (e) => {
+  onsubmit = async (e) => {
     e.preventDefault();
 
 
@@ -364,7 +360,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Prevent submitting if there are no suggestions
     if(characters.length < 1) return;
 
-    AddGuess(characters[0]);
+    await AddGuess(characters[0]);
 
   };
 
@@ -401,8 +397,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     
       const suggestion = GreateSuggestionDiv(element);
 
-      suggestion.addEventListener("click", () => {
-        AddGuess(element);
+      suggestion.addEventListener("click", async () => {
+        await AddGuess(element);
       });
 
       suggestions.insertAdjacentElement("beforeend",suggestion);
