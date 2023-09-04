@@ -349,7 +349,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     cardFooter.classList.add(
       "card-footer",
       "d-flex",
+      "flex-column",
       "justify-content-center",
+      "align-items-center",
       "gap-4"
     );
 
@@ -368,11 +370,54 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Calculate the difference in hours
     const hoursLeft : number = Math.floor(timeDifferenceMilliseconds /1000 / 60 / 60);
+
+    // Calculate the difference in minutes
     const minutesLeft :number = Math.floor(timeDifferenceMilliseconds /1000 / 60 - hoursLeft * 60);
+
+
+    //Construct the timer
+    const timer: HTMLDivElement = document.createElement("div");
+    timer.classList.add("d-flex", "flex-column", "align-items-center", "gap-2");
+
+    const timerTitle: HTMLHeadingElement = document.createElement("h3");
+    timerTitle.classList.add("card-title");
+    timerTitle.textContent = "Next character in:";
+    timer.appendChild(timerTitle);
+
+    const timerBody: HTMLDivElement = document.createElement("div");
+    timerBody.classList.add("d-flex", "flex-row", "align-items-center", "gap-2");
+
+    const hours: HTMLSpanElement = document.createElement("span");
+    hours.classList.add("fw-bold", "fs-1");
+    hours.textContent = hoursLeft.toString();
+    timerBody.appendChild(hours);
+
+    const hoursText: HTMLSpanElement = document.createElement("span");
+    hoursText.classList.add("fw-bold", "fs-1");
+    hoursText.textContent = "hours";
+    timerBody.appendChild(hoursText);
+
+    const minutes: HTMLSpanElement = document.createElement("span");
+    minutes.classList.add("fw-bold", "fs-1");
+    minutes.textContent = minutesLeft.toString();
+    timerBody.appendChild(minutes);
+
+    const minutesText: HTMLSpanElement = document.createElement("span");
+    minutesText.classList.add("fw-bold", "fs-1");
+    minutesText.textContent = "minutes";
+    timerBody.appendChild(minutesText);
+
+    timer.appendChild(timerBody);
+
+    cardFooter.appendChild(timer);
+
 
 
 
     dialogElement.appendChild(cardBody);
+    dialogElement.appendChild(cardFooter);
+
+
 
     return dialogElement;
   }
