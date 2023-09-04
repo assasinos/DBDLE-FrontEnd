@@ -360,7 +360,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     //Add 24 hours to the last update
     lastUpdate.setHours(lastUpdate.getHours() + 24);
-    console.log(lastUpdate);
 
     const currentDate: Date = new Date();
 
@@ -408,6 +407,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     timerBody.appendChild(minutesText);
 
     timer.appendChild(timerBody);
+
+    //Timer update function
+    // TODO: add some animation
+    setInterval(async () => {
+      const currentDate: Date = new Date();
+
+      // Calculate the difference in milliseconds
+      const timeDifferenceMilliseconds = lastUpdate.getTime() - currentDate.getTime();
+  
+  
+      // Calculate the difference in hours
+      const hoursLeft : number = Math.floor(timeDifferenceMilliseconds /1000 / 60 / 60);
+  
+      // Calculate the difference in minutes
+      const minutesLeft :number = Math.floor(timeDifferenceMilliseconds /1000 / 60 - hoursLeft * 60);
+
+    
+      //Update the hours
+      if (hoursLeft.toString() !== hours.textContent) {
+        hours.textContent = hoursLeft.toString();
+      }
+      //Update the minutes
+      if (minutesLeft.toString() !== minutes.textContent) {
+        minutes.textContent = minutesLeft.toString();
+      }
+    }, 1000*60);
 
     cardFooter.appendChild(timer);
 
